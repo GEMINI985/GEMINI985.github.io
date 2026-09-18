@@ -1,7 +1,1035 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="LASTER《龙舌兰：星际传说》官方世界档案与小说阅读站"><meta name="theme-color" content="#10152d"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="assets/icon.png"><link rel="stylesheet" href="style.css"><title>龙舌兰：星际传说｜LASTER</title></head><body><div id="progress" class="progress"><i></i></div><header class="nav"><div class="wrap navin"><a class="brand" href="#top">LASTER<small>星际传说 · 官方档案</small></a><nav class="links"><a href="#author">作者</a><a href="#characters">角色</a><a href="#world">世界观</a><a href="#story">故事</a><a href="#search">搜索</a></nav><a class="mobilemenu" href="#story">阅读</a></div></header><main id="top"><div class="wrap"><section class="hero"><div><div class="eyebrow">LASTER OFFICIAL ARCHIVE</div><h1>龙舌兰<br><span>星际传说</span></h1><p class="lead">一个从城市出发，穿过科技、自然与魔法世界的故事档案。这里收录小说正文、角色资料、世界观设定与内置讲解。</p><div class="actions"><a class="btn primary" href="#story">进入小说阅读器</a><a class="btn" href="#world">探索世界观</a></div></div><div class="heroart"><img src="assets/author.png" alt="LASTER 作者形象"></div></section>
-<section id="author"><div class="sectionhead"><div><div class="eyebrow">CREATOR</div><h2>LASTER</h2></div><p>作者 / 世界档案建立者</p></div><div class="author glass"><img src="assets/author.png" alt="LASTER"><div><span class="tag">作者头像</span><h2>这里是 LASTER 的世界。</h2><p class="lead">图像资产、小说正文与设定资料被整合进同一个可搜索的互动档案馆。角色图片保持原图，不在图片上额外叠加网页文字。</p><div><span class="tag">小说正文</span><span class="tag">角色 Wiki</span><span class="tag">世界观</span><span class="tag">关键词解释</span><span class="tag">阅读进度</span></div></div></div></section>
-<section id="characters"><div class="sectionhead"><div><div class="eyebrow">CHARACTER ARCHIVE</div><h2>五人档案</h2></div><p>点击角色查看完整摘要</p></div><div id="charGrid" class="cards"></div></section>
-<section id="world"><div class="sectionhead"><div><div class="eyebrow">WORLD SYSTEM</div><h2>启灵与五位降临者</h2></div><p>设定资料中的核心概念</p></div><div class="worldgrid"><div class="glass rings"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core"></div></div><div class="glass worldbox"><h3>“启灵”</h3><p>设定中，“启灵”不只是获得力量，而是让一个存在真正拥有定义自身的资格。它涉及意识、规则、生命与存在本身的升华机制。</p><p class="muted">五种已明确对应的降临者权能：</p><div><span class="tag">终焉 · 终结与起始</span><span class="tag">BOSS · 挑战与征服</span><span class="tag">自然 · 天地与万物</span><span class="tag">幻影 · 虚实与梦境</span><span class="tag">甜蜜 · 温暖与希望</span></div></div></div><div style="height:18px"></div><div id="volumeGrid" class="timeline"></div></section>
-<section id="story"><div class="sectionhead"><div><div class="eyebrow">NOVEL READER</div><h2>小说全文阅读器</h2></div><p id="chapterCount">载入中…</p></div><div class="reader"><aside id="toc" class="toc glass"></aside><article id="reader" class="reading glass"><div class="readingbar"><button id="prev" class="btn">上一回</button><button id="next" class="btn primary">下一回</button><button id="fontDown" class="btn">A−</button><button id="fontUp" class="btn">A＋</button></div><div id="chapterMeta" class="chaptermeta"></div><h1 id="chapterTitle">载入中…</h1><div id="novel" class="novel">正在读取小说正文…</div></article></div></section>
-<section id="search"><div class="sectionhead"><div><div class="eyebrow">ARCHIVE SEARCH</div><h2>全站搜索 & 内置讲解</h2></div><p>搜索正文、卷名、角色与设定词</p></div><div class="searchpanel glass"><div class="readingbar"><input id="globalSearch" placeholder="例如：启灵、紫炎、秋风、自然篇……"><button id="searchBtn" class="btn primary">搜索</button></div><div id="searchResults" class="searchresults"></div></div></section>
-</div></main><footer><div class="wrap">LASTER · 《龙舌兰：星际传说》官方世界档案<br><span>域名目标：lasterxingjichuanshuo.com</span></div></footer><div id="modal" class="modal"><div class="modalbox glass"><button id="closeModal" class="close">×</button><div id="modalContent"></div></div></div><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="LASTER《龙舌兰：星际传说》官方世界档案与小说阅读站">
+<meta name="theme-color" content="#10152d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="style.css">
+<title>龙舌兰：星际传说｜LASTER</title>
+<style>
+/* ============================================================
+   LASTER · 星际传说 —— 视觉美化层
+   仅覆盖样式，不改变任何结构 / id / class，兼容原 app.js
+   ============================================================ */
+
+:root{
+  --bg:#070a18;
+  --ink:#eaf0ff;
+  --muted:#96a3c4;
+  --gold:#ffd08a;
+  --cyan:#6ee7ff;
+  --violet:#a78bfa;
+  --line:rgba(255,255,255,.10);
+  --line-strong:rgba(255,255,255,.20);
+  --glass:rgba(255,255,255,.045);
+  --radius:20px;
+  --wrap:1220px;
+  --nav-h:68px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  margin:0;
+  min-height:100%;
+  color:var(--ink);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:16px;
+  line-height:1.75;
+  background:
+    radial-gradient(1200px 720px at 10% -12%, rgba(110,231,255,.16), transparent 62%),
+    radial-gradient(1000px 640px at 92% -4%, rgba(167,139,250,.17), transparent 62%),
+    radial-gradient(900px 760px at 50% 118%, rgba(255,208,138,.10), transparent 62%),
+    linear-gradient(180deg,#070a18 0%,#0a0f26 42%,#070a18 100%);
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
+
+/* 星尘层 */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:.9;
+  background-image:
+    radial-gradient(1.6px 1.6px at 10% 20%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(1.4px 1.4px at 80% 12%, rgba(255,255,255,.42), transparent 60%),
+    radial-gradient(1.2px 1.2px at 35% 68%, rgba(255,255,255,.45), transparent 60%),
+    radial-gradient(1.7px 1.7px at 62% 82%, rgba(160,200,255,.5), transparent 60%),
+    radial-gradient(1.2px 1.2px at 90% 58%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(1.4px 1.4px at 48% 34%, rgba(255,220,180,.42), transparent 60%),
+    radial-gradient(1.2px 1.2px at 22% 88%, rgba(255,255,255,.3), transparent 60%),
+    radial-gradient(1.6px 1.6px at 72% 42%, rgba(200,180,255,.42), transparent 60%),
+    radial-gradient(1.2px 1.2px at 5% 55%, rgba(255,255,255,.3), transparent 60%);
+  animation:twinkle 7s ease-in-out infinite alternate;
+}
+
+header,main,footer{position:relative;z-index:1}
+
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+button,input{font:inherit}
+
+::selection{background:rgba(110,231,255,.35);color:#fff}
+
+/* 滚动条 */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,rgba(110,231,255,.45),rgba(167,139,250,.45));
+  border-radius:99px;
+  border:2px solid transparent;
+  background-clip:padding-box;
+}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,rgba(110,231,255,.7),rgba(167,139,250,.7));background-clip:padding-box}
+
+.wrap{
+  width:100%;
+  max-width:var(--wrap);
+  margin:0 auto;
+  padding:0 24px;
+}
+
+/* ---------- 顶部阅读进度 ---------- */
+.progress{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:3px;
+  z-index:120;
+  background:rgba(255,255,255,.06);
+  pointer-events:none;
+}
+.progress i{
+  display:block;
+  height:100%;
+  width:0;
+  border-radius:0 99px 99px 0;
+  background:linear-gradient(90deg,var(--cyan),var(--violet) 55%,var(--gold));
+  box-shadow:0 0 16px rgba(110,231,255,.85);
+  transition:width .12s linear;
+}
+
+/* ---------- 导航 ---------- */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(8,11,28,.62);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid var(--line);
+}
+.navin{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  height:var(--nav-h);
+}
+.brand{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-decoration:none;
+  font-weight:800;
+  font-size:18px;
+  letter-spacing:.16em;
+  line-height:1;
+  color:#fff;
+  white-space:nowrap;
+}
+.brand small{
+  margin-top:7px;
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.24em;
+  color:var(--muted);
+}
+.brand:hover{color:var(--cyan)}
+
+.links{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.links a{
+  position:relative;
+  padding:9px 14px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:500;
+  color:var(--muted);
+  text-decoration:none;
+  transition:color .22s, background .22s;
+}
+.links a::after{
+  content:"";
+  position:absolute;
+  left:50%;bottom:4px;
+  width:0;height:1.5px;
+  border-radius:2px;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+  transition:width .28s ease;
+}
+.links a:hover{
+  color:#fff;
+  background:rgba(255,255,255,.055);
+}
+.links a:hover::after{width:46%}
+
+.mobilemenu{
+  display:none;
+  padding:9px 18px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  color:#08122a;
+  background:linear-gradient(100deg,var(--gold),var(--cyan));
+  box-shadow:0 8px 24px rgba(110,231,255,.28);
+}
+
+/* ---------- 通用元件 ---------- */
+.eyebrow{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  opacity:.9;
+}
+
+.lead{
+  max-width:60ch;
+  font-size:clamp(14.5px,1.5vw,17px);
+  line-height:1.9;
+  color:var(--muted);
+}
+
+.muted{color:var(--muted)}
+
+.glass{
+  background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.022));
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 22px 55px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 22px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.05);
+  color:var(--ink);
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.02em;
+  text-decoration:none;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:transform .22s ease, background .22s, border-color .22s, box-shadow .22s, color .22s;
+}
+.btn:hover{
+  background:rgba(255,255,255,.11);
+  border-color:var(--line-strong);
+  transform:translateY(-2px);
+}
+.btn:active{transform:translateY(0)}
+.btn.primary{
+  border-color:transparent;
+  color:#08122a;
+  background:linear-gradient(100deg,var(--gold),var(--cyan));
+  box-shadow:0 12px 34px rgba(110,231,255,.26);
+}
+.btn.primary:hover{
+  box-shadow:0 16px 44px rgba(110,231,255,.42);
+  background:linear-gradient(100deg,#ffe3b0,#8beeff);
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  margin:4px 8px 4px 0;
+  padding:6px 13px;
+  border-radius:999px;
+  font-size:12px;
+  line-height:1.4;
+  color:#cfe6ff;
+  background:rgba(110,231,255,.07);
+  border:1px solid rgba(110,231,255,.22);
+  transition:background .22s, border-color .22s, transform .22s;
+}
+.tag:hover{
+  background:rgba(110,231,255,.15);
+  border-color:rgba(110,231,255,.45);
+  transform:translateY(-1px);
+}
+
+section{padding:72px 0;scroll-margin-top:calc(var(--nav-h) + 12px)}
+
+.sectionhead{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+.sectionhead h2{
+  margin:8px 0 0;
+  font-size:clamp(24px,3.4vw,38px);
+  font-weight:800;
+  letter-spacing:-.015em;
+  line-height:1.15;
+}
+.sectionhead > p{
+  margin:0;
+  font-size:13px;
+  color:var(--muted);
+  letter-spacing:.04em;
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  display:grid;
+  grid-template-columns:1.12fr .88fr;
+  gap:56px;
+  align-items:center;
+  padding:84px 0 72px;
+}
+.hero h1{
+  margin:16px 0 20px;
+  font-size:clamp(42px,7vw,86px);
+  font-weight:900;
+  line-height:.98;
+  letter-spacing:-.03em;
+  text-shadow:0 0 60px rgba(110,231,255,.18);
+}
+.hero h1 span{
+  display:inline-block;
+  background:linear-gradient(100deg,#ffd894 0%,#6ee7ff 52%,#a78bfa 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero .actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:32px;
+}
+
+.heroart{
+  position:relative;
+  display:grid;
+  place-items:center;
+  isolation:isolate;
+}
+.heroart::before{
+  content:"";
+  position:absolute;
+  inset:-14%;
+  z-index:-1;
+  border-radius:50%;
+  background:conic-gradient(from 0deg,
+    rgba(110,231,255,.42),
+    rgba(167,139,250,.42),
+    rgba(255,208,138,.38),
+    rgba(110,231,255,.42));
+  filter:blur(60px);
+  opacity:.6;
+  animation:spin 22s linear infinite;
+}
+.heroart img{
+  position:relative;
+  width:100%;
+  max-width:400px;
+  border-radius:26px;
+  border:1px solid var(--line);
+  box-shadow:0 34px 90px rgba(0,0,0,.62);
+  animation:float 7.5s ease-in-out infinite;
+}
+
+/* ---------- 作者 ---------- */
+.author{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:32px;
+  align-items:center;
+  padding:32px;
+}
+.author img{
+  width:190px;
+  height:190px;
+  object-fit:cover;
+  border-radius:18px;
+  border:1px solid var(--line);
+  box-shadow:0 18px 44px rgba(0,0,0,.45);
+}
+.author h2{
+  margin:14px 0 12px;
+  font-size:clamp(21px,2.6vw,30px);
+  font-weight:800;
+  letter-spacing:-.01em;
+  line-height:1.25;
+}
+
+/* ---------- 角色卡片 ---------- */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(228px,1fr));
+  gap:22px;
+}
+#charGrid > *{
+  position:relative;
+  padding:16px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.02));
+  backdrop-filter:blur(14px);
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .32s cubic-bezier(.22,.8,.3,1), border-color .32s, box-shadow .32s;
+}
+#charGrid > *::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:radial-gradient(420px 200px at 50% -30%, rgba(110,231,255,.20), transparent 70%);
+  opacity:0;
+  transition:opacity .32s;
+  pointer-events:none;
+}
+#charGrid > *:hover{
+  transform:translateY(-7px);
+  border-color:rgba(110,231,255,.42);
+  box-shadow:0 28px 64px rgba(0,0,0,.55);
+}
+#charGrid > *:hover::after{opacity:1}
+#charGrid img{
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  border-radius:14px;
+  border:1px solid var(--line);
+  transition:transform .5s cubic-bezier(.22,.8,.3,1);
+}
+#charGrid > *:hover img{transform:scale(1.035)}
+#charGrid h3{
+  margin:14px 0 6px;
+  font-size:16.5px;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+#charGrid p{
+  margin:0;
+  font-size:13px;
+  line-height:1.75;
+  color:var(--muted);
+}
+
+/* ---------- 世界观 ---------- */
+.worldgrid{
+  display:grid;
+  grid-template-columns:.88fr 1.12fr;
+  gap:24px;
+  align-items:stretch;
+}
+.rings{
+  position:relative;
+  display:grid;
+  place-items:center;
+  min-height:340px;
+  overflow:hidden;
+}
+.rings::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(110,231,255,.10), transparent 62%);
+  pointer-events:none;
+}
+.ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(110,231,255,.26);
+  will-change:transform;
+}
+.r1{
+  width:128px;height:128px;
+  border-color:rgba(255,208,138,.62);
+  box-shadow:0 0 34px rgba(255,208,138,.22);
+  animation:pulse 4.2s ease-in-out infinite;
+}
+.r2{
+  width:212px;height:212px;
+  border-style:dashed;
+  border-color:rgba(167,139,250,.48);
+  animation:spin 16s linear infinite;
+}
+.r3{
+  width:300px;height:300px;
+  border-color:rgba(110,231,255,.26);
+  animation:spin 30s linear infinite reverse;
+}
+.core{
+  position:relative;
+  width:58px;height:58px;
+  border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, #fff, var(--gold) 42%, #ff9a3c 100%);
+  box-shadow:
+    0 0 40px rgba(255,208,138,.85),
+    0 0 100px rgba(255,154,60,.45);
+  animation:pulse 3.2s ease-in-out infinite;
+}
+.worldbox{
+  padding:32px clamp(22px,3vw,38px);
+}
+.worldbox h3{
+  margin:0 0 14px;
+  font-size:clamp(20px,2.4vw,27px);
+  font-weight:800;
+  letter-spacing:-.01em;
+  background:linear-gradient(100deg,#fff,#9fe8ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.worldbox p{
+  margin:0 0 16px;
+  font-size:14.5px;
+  line-height:1.95;
+  color:#c3cde8;
+}
+.worldbox p.muted{color:var(--muted);font-size:13.5px;margin-bottom:8px}
+
+/* ---------- 卷轴时间线 ---------- */
+.timeline{display:grid;gap:14px}
+#volumeGrid > *{
+  position:relative;
+  padding:18px 22px 18px 26px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:linear-gradient(100deg,rgba(255,255,255,.06),rgba(255,255,255,.015));
+  color:#d5deff;
+  font-size:14.5px;
+  cursor:pointer;
+  transition:transform .28s, border-color .28s, background .28s, box-shadow .28s;
+}
+#volumeGrid > *::before{
+  content:"";
+  position:absolute;
+  left:0;top:50%;
+  width:3px;height:46%;
+  border-radius:0 4px 4px 0;
+  transform:translateY(-50%);
+  background:linear-gradient(180deg,var(--cyan),var(--violet));
+  opacity:.75;
+  transition:height .28s, opacity .28s;
+}
+#volumeGrid > *:hover{
+  transform:translateX(6px);
+  border-color:rgba(110,231,255,.36);
+  background:linear-gradient(100deg,rgba(110,231,255,.10),rgba(255,255,255,.02));
+  box-shadow:0 16px 40px rgba(0,0,0,.42);
+}
+#volumeGrid > *:hover::before{height:76%;opacity:1}
+
+/* ---------- 阅读器 ---------- */
+.reader{
+  display:grid;
+  grid-template-columns:298px minmax(0,1fr);
+  gap:24px;
+  align-items:start;
+}
+.toc{
+  position:sticky;
+  top:calc(var(--nav-h) + 16px);
+  max-height:calc(100vh - var(--nav-h) - 48px);
+  padding:18px 14px;
+  overflow:auto;
+}
+.toc::-webkit-scrollbar{width:6px}
+#toc a,
+#toc li,
+.toc a{
+  display:block;
+  margin-bottom:3px;
+  padding:9px 13px;
+  border-radius:11px;
+  font-size:13.5px;
+  line-height:1.6;
+  color:var(--muted);
+  text-decoration:none;
+  transition:background .22s, color .22s, padding-left .22s;
+}
+#toc a:hover,
+.toc a:hover{
+  color:#fff;
+  background:rgba(255,255,255,.065);
+  padding-left:17px;
+}
+#toc a.active,
+.toc a.active,
+#toc .active{
+  color:#fff;
+  background:linear-gradient(90deg,rgba(110,231,255,.20),rgba(110,231,255,0));
+  box-shadow:inset 2px 0 0 var(--cyan);
+}
+
+.reading{
+  padding:26px clamp(20px,4vw,54px) 52px;
+  min-width:0;
+}
+.readingbar{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  padding:10px;
+  margin-bottom:24px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:rgba(9,13,32,.66);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.reading{position:relative}
+.reading > .readingbar{
+  position:sticky;
+  top:calc(var(--nav-h) + 12px);
+  z-index:8;
+}
+
+.chaptermeta{
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  opacity:.88;
+}
+
+#chapterTitle{
+  margin:10px 0 26px;
+  padding-bottom:20px;
+  font-size:clamp(24px,3.4vw,38px);
+  font-weight:800;
+  line-height:1.28;
+  letter-spacing:-.015em;
+  border-bottom:1px solid var(--line);
+}
+
+.novel{
+  font-family:"Songti SC","Noto Serif SC",Georgia,"Times New Roman",serif;
+  font-size:17.5px;
+  line-height:2.05;
+  color:#dae3ff;
+  letter-spacing:.012em;
+  max-width:46em;
+}
+.novel p{margin:0 0 1.45em}
+.novel h2,.novel h3{
+  font-family:inherit;
+  margin:1.8em 0 .8em;
+  color:#fff;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+.novel strong{color:#fff}
+.novel em{color:#a9c9ff}
+.novel blockquote{
+  margin:1.6em 0;
+  padding:.9em 1.3em;
+  border-left:2px solid rgba(110,231,255,.5);
+  border-radius:0 12px 12px 0;
+  background:rgba(110,231,255,.055);
+  color:#c6d3f2;
+}
+.novel hr{
+  margin:2.4em 0;
+  border:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--line-strong),transparent);
+}
+.novel img{border-radius:14px;margin:1.4em 0}
+
+/* ---------- 搜索 ---------- */
+.searchpanel{padding:24px}
+.searchpanel .readingbar{margin-bottom:0;position:static;background:transparent;border:0;backdrop-filter:none;padding:0}
+.searchpanel input{
+  flex:1 1 240px;
+  min-width:0;
+  padding:13px 20px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.32);
+  color:var(--ink);
+  font-size:14.5px;
+  outline:none;
+  transition:border-color .25s, box-shadow .25s, background .25s;
+}
+.searchpanel input::placeholder{color:#6d7a99}
+.searchpanel input:focus{
+  border-color:rgba(110,231,255,.55);
+  background:rgba(0,0,0,.45);
+  box-shadow:0 0 0 4px rgba(110,231,255,.12);
+}
+
+.searchresults{
+  display:grid;
+  gap:12px;
+  margin-top:18px;
+}
+.searchresults:empty{display:none}
+#searchResults > *{
+  padding:16px 20px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  font-size:14px;
+  color:#c8d3ef;
+  cursor:pointer;
+  transition:transform .25s, border-color .25s, background .25s;
+}
+#searchResults > *:hover{
+  transform:translateX(5px);
+  border-color:rgba(110,231,255,.38);
+  background:rgba(110,231,255,.075);
+}
+#searchResults mark{
+  padding:1px 5px;
+  border-radius:5px;
+  background:rgba(255,208,138,.22);
+  color:var(--gold);
+}
+
+/* ---------- 页脚 ---------- */
+footer{
+  margin-top:40px;
+  padding:44px 0 56px;
+  border-top:1px solid var(--line);
+  text-align:center;
+  font-size:13.5px;
+  color:var(--muted);
+  letter-spacing:.05em;
+  background:linear-gradient(180deg,transparent,rgba(110,231,255,.035));
+}
+footer span{
+  display:inline-block;
+  margin-top:8px;
+  font-size:12px;
+  opacity:.6;
+  letter-spacing:.12em;
+}
+
+/* ---------- 模态框 ---------- */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:none;
+  place-items:center;
+  padding:22px;
+  background:rgba(4,6,16,.72);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.modal.open,
+.modal[style*="display: block"],
+.modal[style*="display:block"]{display:grid !important}
+
+.modalbox{
+  position:relative;
+  width:100%;
+  max-width:780px;
+  max-height:86vh;
+  overflow:auto;
+  padding:32px clamp(22px,4vw,44px);
+  animation:pop .34s cubic-bezier(.22,1.1,.36,1);
+}
+.modalbox h2,.modalbox h3{
+  margin:0 0 14px;
+  font-size:clamp(19px,2.4vw,26px);
+  font-weight:800;
+  letter-spacing:-.01em;
+}
+.modalbox p{color:#c3cde8;font-size:14.5px;line-height:1.95}
+.modalbox img{border-radius:16px;margin-bottom:16px}
+.modalbox .tag{margin-top:10px}
+
+.close{
+  position:absolute;
+  top:14px;right:16px;
+  width:38px;height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+  transition:background .22s, transform .22s, border-color .22s;
+}
+.close:hover{
+  background:rgba(255,90,120,.22);
+  border-color:rgba(255,120,150,.5);
+  transform:rotate(90deg);
+}
+
+/* ---------- 动画 ---------- */
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-14px)}
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.055);opacity:.86}
+}
+@keyframes twinkle{
+  from{opacity:.55}
+  to{opacity:1}
+}
+@keyframes pop{
+  from{opacity:0;transform:translateY(16px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1024px){
+  .hero{grid-template-columns:1fr;gap:44px;padding:60px 0 52px}
+  .heroart{order:-1}
+  .heroart img{max-width:320px}
+  .worldgrid{grid-template-columns:1fr}
+  .reader{grid-template-columns:1fr}
+  .toc{position:static;max-height:300px}
+  .reading > .readingbar{position:static}
+}
+
+@media (max-width:820px){
+  .links{display:none}
+  .mobilemenu{display:inline-flex}
+  .author{grid-template-columns:1fr;text-align:center;justify-items:center;padding:26px}
+  .author img{width:150px;height:150px}
+  .sectionhead{align-items:flex-start;flex-direction:column;gap:8px}
+  section{padding:54px 0}
+}
+
+@media (max-width:560px){
+  .wrap{padding:0 18px}
+  .navin{height:60px}
+  .brand{font-size:15px;letter-spacing:.12em}
+  .brand small{font-size:9px;letter-spacing:.18em}
+  .hero h1{font-size:clamp(36px,12vw,56px)}
+  .hero .actions .btn{flex:1 1 auto}
+  .cards{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+  #charGrid > *{padding:11px;border-radius:16px}
+  .novel{font-size:16.5px;line-height:1.95}
+  .reading{padding:16px 14px 40px}
+  .readingbar{gap:8px;padding:8px}
+  .btn{padding:10px 16px;font-size:13px}
+  .rings{min-height:280px}
+  .r3{width:240px;height:240px}
+  .r2{width:172px;height:172px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div id="progress" class="progress"><i></i></div>
+
+<header class="nav">
+  <div class="wrap navin">
+    <a class="brand" href="#top">LASTER<small>星际传说 · 官方档案</small></a>
+    <nav class="links">
+      <a href="#author">作者</a>
+      <a href="#characters">角色</a>
+      <a href="#world">世界观</a>
+      <a href="#story">故事</a>
+      <a href="#search">搜索</a>
+    </nav>
+    <a class="mobilemenu" href="#story">阅读</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">LASTER OFFICIAL ARCHIVE</div>
+        <h1>龙舌兰<br><span>星际传说</span></h1>
+        <p class="lead">一个从城市出发，穿过科技、自然与魔法世界的故事档案。这里收录小说正文、角色资料、世界观设定与内置讲解。</p>
+        <div class="actions">
+          <a class="btn primary" href="#story">进入小说阅读器</a>
+          <a class="btn" href="#world">探索世界观</a>
+        </div>
+      </div>
+      <div class="heroart">
+        <img src="assets/author.png" alt="LASTER 作者形象">
+      </div>
+    </section>
+
+    <section id="author">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">CREATOR</div>
+          <h2>LASTER</h2>
+        </div>
+        <p>作者 / 世界档案建立者</p>
+      </div>
+      <div class="author glass">
+        <img src="assets/author.png" alt="LASTER">
+        <div>
+          <span class="tag">作者头像</span>
+          <h2>这里是 LASTER 的世界。</h2>
+          <p class="lead">图像资产、小说正文与设定资料被整合进同一个可搜索的互动档案馆。角色图片保持原图，不在图片上额外叠加网页文字。</p>
+          <div>
+            <span class="tag">小说正文</span>
+            <span class="tag">角色 Wiki</span>
+            <span class="tag">世界观</span>
+            <span class="tag">关键词解释</span>
+            <span class="tag">阅读进度</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="characters">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">CHARACTER ARCHIVE</div>
+          <h2>五人档案</h2>
+        </div>
+        <p>点击角色查看完整摘要</p>
+      </div>
+      <div id="charGrid" class="cards"></div>
+    </section>
+
+    <section id="world">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">WORLD SYSTEM</div>
+          <h2>启灵与五位降临者</h2>
+        </div>
+        <p>设定资料中的核心概念</p>
+      </div>
+
+      <div class="worldgrid">
+        <div class="glass rings">
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+          <div class="core"></div>
+        </div>
+        <div class="glass worldbox">
+          <h3>“启灵”</h3>
+          <p>设定中，“启灵”不只是获得力量，而是让一个存在真正拥有定义自身的资格。它涉及意识、规则、生命与存在本身的升华机制。</p>
+          <p class="muted">五种已明确对应的降临者权能：</p>
+          <div>
+            <span class="tag">终焉 · 终结与起始</span>
+            <span class="tag">BOSS · 挑战与征服</span>
+            <span class="tag">自然 · 天地与万物</span>
+            <span class="tag">幻影 · 虚实与梦境</span>
+            <span class="tag">甜蜜 · 温暖与希望</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:22px"></div>
+      <div id="volumeGrid" class="timeline"></div>
+    </section>
+
+    <section id="story">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">NOVEL READER</div>
+          <h2>小说全文阅读器</h2>
+        </div>
+        <p id="chapterCount">载入中…</p>
+      </div>
+
+      <div class="reader">
+        <aside id="toc" class="toc glass"></aside>
+        <article id="reader" class="reading glass">
+          <div class="readingbar">
+            <button id="prev" class="btn">上一回</button>
+            <button id="next" class="btn primary">下一回</button>
+            <button id="fontDown" class="btn">A−</button>
+            <button id="fontUp" class="btn">A＋</button>
+          </div>
+          <div id="chapterMeta" class="chaptermeta"></div>
+          <h1 id="chapterTitle">载入中…</h1>
+          <div id="novel" class="novel">正在读取小说正文…</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="search">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">ARCHIVE SEARCH</div>
+          <h2>全站搜索 &amp; 内置讲解</h2>
+        </div>
+        <p>搜索正文、卷名、角色与设定词</p>
+      </div>
+      <div class="searchpanel glass">
+        <div class="readingbar">
+          <input id="globalSearch" placeholder="例如：启灵、紫炎、秋风、自然篇……">
+          <button id="searchBtn" class="btn primary">搜索</button>
+        </div>
+        <div id="searchResults" class="searchresults"></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    LASTER · 《龙舌兰：星际传说》官方世界档案<br>
+    <span>域名目标：lasterxingjichuanshuo.com</span>
+  </div>
+</footer>
+
+<div id="modal" class="modal">
+  <div class="modalbox glass">
+    <button id="closeModal" class="close">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
